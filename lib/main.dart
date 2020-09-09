@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:wanandroid/model/baseModel.dart';
+import 'package:wanandroid/model/demoModel.dart';
+import 'package:wanandroid/network/networkManager.dart';
 
 void main() {
   runApp(MyApp());
@@ -51,15 +54,34 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-
+  String data = "";
   void _incrementCounter() {
-    setState(() {
+    setState(() async {
       // This call to setState tells the Flutter framework that something has
       // changed in this State, which causes it to rerun the build method below
       // so that the display can reflect the updated values. If we changed
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
       _counter++;
+
+      // if (data == "") {
+      //   data = await NetworkManager.getInstance()
+      //       .request("banner/json", method: "get");
+      //   print(data);
+      // }
+
+      final res = await NetworkManager.getInstance().request(
+        "banner/json",
+        method: "get",
+      );
+
+      var modelList =
+          BaseRespList<BannerModel>(res, (res) => BannerModel.fromJson(res));
+
+      print(modelList);
+      print(modelList.code);
+      print(modelList.data.length);
+      print(modelList.data[1]);
     });
   }
 
