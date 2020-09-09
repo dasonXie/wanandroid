@@ -35,6 +35,7 @@ class _MainPageState extends State<MainPage>
       length: 4,
       child: Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           leading: LeftIcon(),
           actions: <Widget>[
             RightIcon(),
