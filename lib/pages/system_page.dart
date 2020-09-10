@@ -20,7 +20,7 @@ class SystemPage extends StatelessWidget {
 
   networkDemo() async {
     final res = await NetworkManager.getInstance().request(
-      WanAndroidApi.BANNER,
+      WanAndroidApi.BANNER + "/json",
       method: "get",
     );
 
