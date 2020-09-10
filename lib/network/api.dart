@@ -1,3 +1,4 @@
+/*目测所有的接口都为get请求，参数就自己拼接吧*/
 class WanAndroidApi {
   /// 首页banner http://www.wanandroid.com/banner/json
   static const String BANNER = "banner";
@@ -32,4 +33,5 @@ class WanAndroidApi {
   static const String lg_collect_list = "lg/collect/list"; //收藏文章列表
   static const String lg_collect = "lg/collect"; //收藏站内文章
   static const String lg_uncollect_originid = "lg/uncollect_originId"; //取消收藏
+
 }
