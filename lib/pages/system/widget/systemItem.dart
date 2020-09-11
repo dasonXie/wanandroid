@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:wanandroid/pages/system/model/systemModel.dart';
 import 'dart:math';
 
-class SystemItem extends StatelessWidget {
-  final name;
+import 'package:wanandroid/pages/system/page/system_tab_page.dart';
 
-  const SystemItem(this.name, {Key key}) : super(key: key);
+class SystemItem extends StatelessWidget {
+  final SystemModel model;
+
+  //点击回调
+  final void Function(String) callBack;
+
+  const SystemItem(this.model, {Key key, this.callBack}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,9 +18,9 @@ class SystemItem extends StatelessWidget {
       color: randomColor(),
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20.0))),
-      child: Text(name),
+      child: Text(model.name),
       onPressed: () {
-        print("$name");
+        callBack(model.name);
       },
     );
   }
