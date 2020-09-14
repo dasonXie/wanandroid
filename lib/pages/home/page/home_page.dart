@@ -5,8 +5,8 @@ import 'package:wanandroid/pages/home/widget/homeRecoWXArticle.dart';
 import '../widget/homeBanner.dart';
 import '../model/homeBannerModel.dart';
 import '../model/homeRecoReposModel.dart';
-import '../../../service_method/home_network.dart';
-import '../../../model/baseModel.dart';
+import 'package:wanandroid/service_method/home/home_network.dart';
+import 'package:wanandroid/model/baseModel.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
