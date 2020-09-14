@@ -34,6 +34,17 @@ dependencies:
   #数据模型处理
   json_annotation: ^3.0.1
 
+  #轮播图
+  flutter_swiper: ^1.1.6
+
+  #屏幕适配
+  flutter_screenutil: ^2.3.1
+
+  #网络图片加载
+  cached_network_image: ^2.2.0
+
+
+
   
 
 dev_dependencies:

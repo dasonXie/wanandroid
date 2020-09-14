@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'home_page.dart';
 import 'repos_page.dart';
 import 'events_page.dart';
 import 'system_page.dart';
 import 'drawer_page.dart';
 import 'search_page.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 final List<Widget> _tabs = [
   Tab(text: "Home"),
@@ -27,10 +29,11 @@ class MainPage extends StatefulWidget {
   _MainPageState createState() => _MainPageState();
 }
 
-class _MainPageState extends State<MainPage>
-    with SingleTickerProviderStateMixin {
+class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
+    //默认按750的尺寸布局
+    ScreenUtil.init(context, width: 750, height: 1334, allowFontScaling: false);
     return DefaultTabController(
       length: 4,
       child: Scaffold(
