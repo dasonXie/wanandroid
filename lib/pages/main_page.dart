@@ -3,7 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'home_page.dart';
 import 'repos_page.dart';
 import 'events_page.dart';
-import 'system_page.dart';
+import 'system/page/system_page.dart';
 import 'drawer_page.dart';
 import 'search_page.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
