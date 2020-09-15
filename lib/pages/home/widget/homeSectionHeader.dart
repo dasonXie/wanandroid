@@ -8,7 +8,7 @@ class SectionHeader extends StatelessWidget {
   String title;
   Function onTap;
   Color color;
-  SectionHeader(this.icon, this.title, this.color);
+  SectionHeader(this.icon, this.title, this.color, {this.onTap});
 
   @override
   Widget build(BuildContext context) {

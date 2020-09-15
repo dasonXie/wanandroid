@@ -7,6 +7,7 @@ import '../model/homeBannerModel.dart';
 import '../model/homeRecoReposModel.dart';
 import 'package:wanandroid/service_method/home/home_network.dart';
 import 'package:wanandroid/model/baseModel.dart';
+import 'home_repostree_page.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -68,8 +69,22 @@ class _HomePageState extends State<HomePage>
               controller: _scrollC,
               children: <Widget>[
                 BannerSwiper(banners.data),
-                RecoReposSection(recoReposModel),
-                WXArticalSection(wxArticalModel),
+                RecoReposSection(
+                  recoReposModel,
+                  moreOnTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) {
+                        return ReposTree();
+                      },
+                    ));
+                  },
+                ),
+                WXArticalSection(
+                  wxArticalModel,
+                  moreOnTap: () {
+                    print("wx artical more");
+                  },
+                ),
               ],
             );
           } else {

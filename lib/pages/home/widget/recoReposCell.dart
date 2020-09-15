@@ -1,56 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'homeSectionHeader.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import '../model/homeRecoReposModel.dart';
 
-//wx articals
+//reco cell
 // ignore: must_be_immutable
-class WXArticalSection extends StatelessWidget {
-  HomeRecoReposModel recoReposModel;
-  Function moreOnTap;
-  WXArticalSection(this.recoReposModel, {this.moreOnTap});
-
-  List<Widget> _wxArticalsChild() {
-    List<Widget> list = [];
-    list.add(
-      SectionHeader(
-        Icon(Icons.book, color: Colors.green),
-        "WX Articals",
-        Colors.green,
-        onTap: moreOnTap,
-      ),
-    );
-
-    List<RecoReposCellModel> showList = [];
-    if (recoReposModel.datas.length > 6) {
-      showList = recoReposModel.datas.sublist(0, 6);
-    }
-    showList.map((e) {
-      list.add(WXArticalCell(e));
-    }).toList();
-
-    return list;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: _wxArticalsChild(),
-    );
-  }
-}
-
-//wx cell
-// ignore: must_be_immutable
-class WXArticalCell extends StatelessWidget {
+class RecoReposCell extends StatelessWidget {
   RecoReposCellModel cellModel;
-  WXArticalCell(this.cellModel);
+  RecoReposCell(this.cellModel);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        print("wx");
+        print("item");
       },
       child: Container(
         padding: EdgeInsets.all(20.w),
@@ -59,14 +22,15 @@ class WXArticalCell extends StatelessWidget {
             top: BorderSide(width: 2.h, color: Colors.black12),
           ),
         ),
-        height: 210.h,
+        height: 290.h,
         child: Row(
           children: <Widget>[
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Expanded(
+                  Container(
+                    height: 44.h,
                     child: Text(
                       cellModel.title,
                       maxLines: 1,
@@ -77,8 +41,22 @@ class WXArticalCell extends StatelessWidget {
                       ),
                     ),
                   ),
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 10.h),
+                      child: Text(
+                        cellModel.desc,
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 28.sp,
+                          color: Colors.black54,
+                        ),
+                      ),
+                    ),
+                  ),
                   Container(
-                    height: 80.h,
+                    height: 44.h,
                     child: Row(
                       children: <Widget>[
                         Icon(
@@ -97,24 +75,29 @@ class WXArticalCell extends StatelessWidget {
                         ),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
             Container(
               margin: EdgeInsets.only(left: 20.w),
-              width: 120.w,
-              height: 120.w,
+              width: 160.w,
               //color: Colors.orange,
-              child: CircleAvatar(
-                backgroundColor: Colors.green,
-                child: Text(
-                  cellModel.superChapterName,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24.sp,
-                  ),
-                ),
+              child: CachedNetworkImage(
+                fit: BoxFit.cover,
+                imageUrl: cellModel.envelopePic,
+                placeholder: (context, url) {
+                  return Container(
+                    width: 160.w,
+                    alignment: Alignment.center,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                    ),
+                  );
+                },
+                errorWidget: (context, url, error) {
+                  return Icon(Icons.error, color: Colors.grey);
+                },
               ),
             ),
           ],
