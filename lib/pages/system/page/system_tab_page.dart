@@ -110,6 +110,12 @@ class _SystemTabPageState extends State<SystemTabPage>
     //bloc状态管理
     bloc.refresh();
   }
+
+  @override
+  void dispose() {
+    bloc.dispose();
+    super.dispose();
+  }
 }
 
 //BLoC通道流

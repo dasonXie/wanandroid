@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:wanandroid/network/networkManager.dart';
 import 'package:wanandroid/pages/system/model/systemArticleModel.dart';
+import 'package:wanandroid/network/api.dart';
+import 'package:wanandroid/model/baseModel.dart';
 
 class ArticleRow extends StatelessWidget {
   final ArticleModel model;
@@ -17,9 +20,13 @@ class ArticleRow extends StatelessWidget {
             child: CircleAvatar(
               radius: 28,
               backgroundColor: Colors.blue,
-              child: Text(
-                model.superChapterName,
-                style: TextStyle(fontSize: 11, color: Colors.white),
+              child: Padding(
+                padding: EdgeInsets.all(6),
+                child: Text(
+                  model.superChapterName,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 11, color: Colors.white),
+                ),
               ),
             ),
           ),
@@ -39,6 +46,23 @@ class ArticleRow extends StatelessWidget {
         ),
         Row(
           children: [
+            InkWell(
+              child: Icon(
+                Icons.favorite,
+                color: Colors.grey,
+              ),
+              onTap: () async {
+                collect(model.id);
+              },
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Text(model.shareUser,
+                style: TextStyle(fontSize: 12, color: Colors.grey)),
+            SizedBox(
+              width: 10,
+            ),
             Text(model.niceDate,
                 style: TextStyle(fontSize: 12, color: Colors.grey))
           ],
@@ -47,51 +71,13 @@ class ArticleRow extends StatelessWidget {
     );
   }
 
-  sdfsdf1() {
-    return Stack(
-      children: [
-        Align(
-          alignment: Alignment.topLeft,
-          child: Text(
-            model.title,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-          ),
-        ),
-        Align(
-          alignment: Alignment.bottomLeft,
-          child: Text(model.niceDate,
-              style: TextStyle(fontSize: 12, color: Colors.grey)),
-        ),
-      ],
-    );
-  }
+//收藏按钮
+  collect(int id) async {
+    var res = await NetworkManager.getInstance()
+        .request(WanAndroidApi.lg_collect + "/$id" + "/json");
 
-  sdfsdf2() {
-    return Stack(
-      children: [
-        Positioned(
-          child: Text(
-            model.title,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-          ),
-        ),
-        Positioned(
-          bottom: -10,
-          child: Text(model.niceDate,
-              style: TextStyle(fontSize: 12, color: Colors.grey)),
-        ),
-      ],
-    );
-  }
+    // var model = BaseResp<String>(res, (res) => String)
 
-  sdfsdf3() {
-    return Column(children: [
-      Container(
-        height: 10,
-        color: Colors.yellow,
-      )
-    ]);
+    print(res);
   }
 }

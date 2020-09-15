@@ -29,5 +29,5 @@ class ProjectListModel {
   factory ProjectListModel.fromJson(Map<String, dynamic> json) =>
       _$ProjectListModelFromJson(json);
 
-  Map<String,dynamic> toJson() => _$ProjectListModelToJson(this);
+  Map<String, dynamic> toJson() => _$ProjectListModelToJson(this);
 }
