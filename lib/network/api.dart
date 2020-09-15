@@ -1,7 +1,7 @@
 /*目测所有的接口都为get请求，参数就自己拼接吧*/
 class WanAndroidApi {
   /// 首页banner http://www.wanandroid.com/banner/json
-  static const String BANNER = "banner";
+  static const String BANNER = "banner/json";
 
   /// 最新项目tab (首页的第二个tab) http://wanandroid.com/article/listproject/0/json
   static const String ARTICLE_LISTPROJECT = "article/listproject";
