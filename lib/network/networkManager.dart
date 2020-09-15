@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:wanandroid/model/baseModel.dart';
 
 class NetworkManager {
   static NetworkManager _instance = NetworkManager._internal();
