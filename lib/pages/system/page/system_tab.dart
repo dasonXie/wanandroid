@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wanandroid/pages/system/model/systemModel.dart';
+import 'package:wanandroid/pages/system/page/system_tab_page.dart';
 
 class SystemTab extends StatelessWidget {
   final SystemModel modelGroup;
@@ -14,6 +15,7 @@ class SystemTab extends StatelessWidget {
           title: Text(modelGroup.name),
           bottom: TabBar(
             isScrollable: true,
+            indicatorColor: Colors.white,
             tabs: tabList(),
           ),
         ),
@@ -37,7 +39,7 @@ class SystemTab extends StatelessWidget {
   pageList() {
     List<Widget> tabs = List();
     for (var model in modelGroup.children) {
-      tabs.add(Text(model.name));
+      tabs.add(SystemTabPage(model.id.toString()));
     }
     return tabs;
   }

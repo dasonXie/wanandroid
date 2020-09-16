@@ -11,20 +11,22 @@ Future getBanner() async {
 }
 
 //项目列表 data
-Future getReposList({int cid}) async {
+Future getReposList({int cid, int page}) async {
+  int urlCid = cid == null ? 402 : cid;
+  int urlPage = page == null ? 1 : page;
   final res = await NetworkManager.getInstance().request(
-    WanAndroidApi.PROJECT_LIST +
-        (cid == null ? "/1/json?cid=402" : "/1/json?cid=${cid}"),
+    WanAndroidApi.PROJECT_LIST + "/$urlPage/json?cid=$urlCid",
     method: "get",
   );
   return res;
 }
 
 //微信文章 data
-Future getWXArticalList({int chapterId}) async {
+Future getWXArticalList({int chapterId, int page}) async {
+  int urlId = chapterId == null ? 408 : chapterId;
+  int urlPage = page == null ? 1 : page;
   final res = await NetworkManager.getInstance().request(
-    WanAndroidApi.WXARTICLE_LIST +
-        (chapterId == null ? "/408/1/json" : "/${chapterId}/1/json"),
+    WanAndroidApi.WXARTICLE_LIST + "/$urlId/$urlPage/json",
     method: "get",
   );
   return res;

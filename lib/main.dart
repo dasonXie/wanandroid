@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:wanandroid/model/baseModel.dart';
-import 'package:wanandroid/model/demoModel.dart';
-import 'package:wanandroid/network/networkManager.dart';
 import './pages/main_page.dart';
 import 'package:provider/provider.dart';
 import './provider/reposTreeProvider.dart';

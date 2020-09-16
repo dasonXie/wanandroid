@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:wanandroid/pages/system/model/systemModel.dart';
 import 'dart:math';
 
-import 'package:wanandroid/pages/system/page/system_tab_page.dart';
-
 class SystemItem extends StatelessWidget {
   final SystemModel model;
 
