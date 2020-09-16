@@ -58,7 +58,7 @@ class _SystemTabPageState extends State<SystemTabPage>
       enableControlFinishLoad: true,
       controller: refreshController,
       child: ListView.separated(
-        itemCount: this._modelList == null ? 0 : this._modelList.list.length,
+        itemCount: itemCount(),
         //添加分割线
         separatorBuilder: (BuildContext context, int index) {
           return Divider();
@@ -69,6 +69,14 @@ class _SystemTabPageState extends State<SystemTabPage>
         },
       ),
     );
+  }
+
+  itemCount() {
+    if (this._modelList == null || this._modelList.list == null) {
+      return 0;
+    } else {
+      return this._modelList.list.length;
+    }
   }
 
   //加载网络数据
@@ -119,6 +127,7 @@ class _SystemTabPageState extends State<SystemTabPage>
 }
 
 //BLoC通道流
+//BLoC的时候还是要用在StatefulWidget，并且手动的调用一下dispose，否则可能会有不可预测的bug
 class RefreshBLoC {
   var _controllerStream = StreamController<int>();
 

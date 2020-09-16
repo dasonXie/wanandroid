@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 
 class NetworkManager {
   static NetworkManager _instance = NetworkManager._internal();
@@ -19,6 +20,10 @@ class NetworkManager {
       //拦截器，暂时不用
       // _dio.interceptors.add(new DioLogInterceptor());
       // _dio.interceptors.add(new ResponseInterceptors());
+      _dio.options.headers = {
+        "Cookie":
+            "[loginUserName=dasonxie; Expires=Wed, 14-Oct-2020 09:03:53 GMT; Path=/, token_pass=3d2722e6451f77cdf993724197f331b9; Expires=Wed, 14-Oct-2020 09:03:53 GMT; Path=/, loginUserName_wanandroid_com=dasonxie; Domain=wanandroid.com; Expires=Wed, 14-Oct-2020 09:03:53 GMT; Path=/, token_pass_wanandroid_com=3d2722e6451f77cdf993724197f331b9; Domain=wanandroid.com; Expires=Wed, 14-Oct-2020 09:03:53 GMT; Path=/]"
+      };
     }
   }
 
