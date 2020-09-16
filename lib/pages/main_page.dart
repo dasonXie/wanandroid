@@ -22,17 +22,11 @@ final List<Widget> _pages = [
   SystemPage()
 ];
 
-class MainPage extends StatefulWidget {
-  MainPage({Key key}) : super(key: key);
+class MainPage extends StatelessWidget {
+  const MainPage({Key key}) : super(key: key);
 
-  @override
-  _MainPageState createState() => _MainPageState();
-}
-
-class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
-    //默认按750的尺寸布局
     ScreenUtil.init(context, width: 750, height: 1334, allowFontScaling: false);
     return DefaultTabController(
       length: 4,

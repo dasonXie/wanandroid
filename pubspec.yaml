@@ -42,6 +42,8 @@ dependencies:
   #网络图片加载
   cached_network_image: ^2.2.0
 
+  #状态管理
+  provider: ^4.3.2+2
 
 
   #下拉刷新

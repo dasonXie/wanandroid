@@ -7,6 +7,7 @@ import '../model/homeBannerModel.dart';
 import '../model/homeRecoReposModel.dart';
 import 'package:wanandroid/service_method/home/home_network.dart';
 import 'package:wanandroid/model/baseModel.dart';
+import 'home_repostree_page.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -68,8 +69,18 @@ class _HomePageState extends State<HomePage>
               controller: _scrollC,
               children: <Widget>[
                 BannerSwiper(banners.data),
-                RecoReposSection(recoReposModel),
-                WXArticalSection(wxArticalModel),
+                RecoReposSection(
+                  recoReposModel,
+                  moreOnTap: () {
+                    _moreTreesPage(Treetype.recorepos, context);
+                  },
+                ),
+                WXArticalSection(
+                  wxArticalModel,
+                  moreOnTap: () {
+                    _moreTreesPage(Treetype.wxarticles, context);
+                  },
+                ),
               ],
             );
           } else {
@@ -98,6 +109,15 @@ class _HomePageState extends State<HomePage>
               child: Icon(Icons.keyboard_arrow_up),
             ),
     );
+  }
+
+  //更多
+  _moreTreesPage(Treetype type, BuildContext ctx) {
+    Navigator.of(ctx).push(MaterialPageRoute(
+      builder: (context) {
+        return ReposTree(type);
+      },
+    ));
   }
 }
 
