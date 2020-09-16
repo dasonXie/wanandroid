@@ -3,10 +3,18 @@ import 'package:wanandroid/network/networkManager.dart';
 import 'package:wanandroid/pages/system/model/systemArticleModel.dart';
 import 'package:wanandroid/network/api.dart';
 import 'package:wanandroid/model/baseModel.dart';
+import 'package:wanandroid/pages/system/page/system_tab_page.dart';
 
-class ArticleRow extends StatelessWidget {
+class ArticleRow extends StatefulWidget {
   final ArticleModel model;
-  const ArticleRow(this.model, {Key key}) : super(key: key);
+  ArticleRow(this.model, {Key key}) : super(key: key);
+
+  @override
+  _ArticleRowState createState() => _ArticleRowState();
+}
+
+class _ArticleRowState extends State<ArticleRow> {
+  RefreshBLoC bloc = RefreshBLoC();
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +31,7 @@ class ArticleRow extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.all(6),
                 child: Text(
-                  model.superChapterName,
+                  widget.model.superChapterName,
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 11, color: Colors.white),
                 ),
@@ -40,30 +48,42 @@ class ArticleRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          model.title,
+          widget.model.title,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
         ),
         Row(
           children: [
-            InkWell(
-              child: Icon(
-                Icons.favorite,
-                color: Colors.grey,
-              ),
-              onTap: () async {
-                collect(model.id);
+            StreamBuilder(
+              stream: bloc.steream,
+              initialData: 0,
+              builder: (context, snapshot) {
+                return InkWell(
+                  child: Icon(
+                    Icons.favorite,
+                    color: widget.model.collect ? Colors.red : Colors.grey,
+                  ),
+                  onTap: () async {
+                    if (widget.model.collect) {
+                      //取消收藏
+                      uncollect(widget.model);
+                    } else {
+                      //收藏
+                      collect(widget.model);
+                    }
+                  },
+                );
               },
             ),
             SizedBox(
               width: 10,
             ),
-            Text(model.shareUser,
+            Text(widget.model.shareUser,
                 style: TextStyle(fontSize: 12, color: Colors.grey)),
             SizedBox(
               width: 10,
             ),
-            Text(model.niceDate,
+            Text(widget.model.niceDate,
                 style: TextStyle(fontSize: 12, color: Colors.grey))
           ],
         )
@@ -72,12 +92,43 @@ class ArticleRow extends StatelessWidget {
   }
 
 //收藏按钮
-  collect(int id) async {
-    var res = await NetworkManager.getInstance()
-        .request(WanAndroidApi.lg_collect + "/$id" + "/json");
+  collect(ArticleModel model) async {
+    var res = await NetworkManager.getInstance().request(
+        WanAndroidApi.lg_collect + "/" + model.id.toString() + "/json");
 
-    // var model = BaseResp<String>(res, (res) => String)
+    var result = BaseResp<String>(res, (res) {
+      return res;
+    });
 
-    print(res);
+    if (result.code == 0) {
+      //收藏成功才刷新
+      model.collect = !model.collect;
+      bloc.refresh();
+    }
+  }
+
+  //取消收藏按钮
+  uncollect(ArticleModel model) async {
+    var res = await NetworkManager.getInstance().request(
+        WanAndroidApi.lg_uncollect_originid +
+            "/" +
+            model.id.toString() +
+            "/json");
+
+    var result = BaseResp<String>(res, (res) {
+      return res;
+    });
+
+    if (result.code == 0) {
+      //取消收藏成功才刷新
+      model.collect = !model.collect;
+      bloc.refresh();
+    }
+  }
+
+  @override
+  void dispose() {
+    bloc.dispose();
+    super.dispose();
   }
 }
