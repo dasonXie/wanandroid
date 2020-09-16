@@ -3,9 +3,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wanandroid/service_method/home/home_network.dart';
 import '../model/reposTreeModel.dart';
 import '../widget/recoTreePage.dart';
+import '../widget/wxArticleTreePage.dart';
 
+enum Treetype {
+  recorepos,
+  wxarticles,
+}
+
+// ignore: must_be_immutable
 class ReposTree extends StatefulWidget {
-  ReposTree({Key key}) : super(key: key);
+  Treetype type;
+  ReposTree(this.type, {Key key}) : super(key: key);
 
   @override
   _ReposTreeState createState() => _ReposTreeState();
@@ -21,13 +29,15 @@ class _ReposTreeState extends State<ReposTree> with TickerProviderStateMixin {
     super.initState();
     _tabController = TabController(length: _titles.length, vsync: this);
 
-    getReposTreeList().then((value) {
+    int urlType = widget.type == Treetype.recorepos ? 1 : 2;
+    getTreesList(urlType).then((value) {
       ReposTreeModel treeModel = ReposTreeModel.fromJson(value);
       setState(() {
         _titles.addAll(treeModel.data);
         _tabController = TabController(length: _titles.length, vsync: this);
       });
     });
+
     //_futureBuildFuture = getReposTreeList();
   }
 
@@ -35,7 +45,9 @@ class _ReposTreeState extends State<ReposTree> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Repos Tree"),
+        title: widget.type == Treetype.recorepos
+            ? Text("Repos Tree")
+            : Text("Wx Article"),
         bottom: _tabbarWidget(),
       ),
       body: _bodyWidget(),
@@ -111,8 +123,13 @@ class _ReposTreeState extends State<ReposTree> with TickerProviderStateMixin {
   //当前分类详情列表
   List<Widget> _tabbarviewChild() {
     List<Widget> l = [];
+
     _titles.map((e) {
-      l.add(RecoTreePage(e.id));
+      if (widget.type == Treetype.recorepos) {
+        l.add(RecoTreePage(e.id));
+      } else {
+        l.add(WXArticleTreePage(e.id));
+      }
     }).toList();
     return l;
   }

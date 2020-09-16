@@ -21,18 +21,29 @@ Future getReposList({int cid}) async {
 }
 
 //微信文章 data
-Future getWXArticalList() async {
+Future getWXArticalList({int chapterId}) async {
   final res = await NetworkManager.getInstance().request(
-    WanAndroidApi.WXARTICLE_LIST + "/408/1/json",
+    WanAndroidApi.WXARTICLE_LIST +
+        (chapterId == null ? "/408/1/json" : "/${chapterId}/1/json"),
     method: "get",
   );
   return res;
 }
 
-//项目分类列表 data
-Future getReposTreeList() async {
+//获取分类数据
+//type==1 ：项目分类
+//type==2 ：微信工作号分类
+Future getTreesList(int type) async {
+  String url;
+  if (type == 1) {
+    //项目分类
+    url = WanAndroidApi.PROJECT_TREE + "/json";
+  } else {
+    //微信工作号分类
+    url = WanAndroidApi.WXARTICLE_CHAPTERS + "/json";
+  }
   final res = await NetworkManager.getInstance().request(
-    WanAndroidApi.PROJECT_TREE + "/json",
+    url,
     method: "get",
   );
   return res;

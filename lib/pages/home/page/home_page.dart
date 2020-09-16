@@ -72,17 +72,13 @@ class _HomePageState extends State<HomePage>
                 RecoReposSection(
                   recoReposModel,
                   moreOnTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) {
-                        return ReposTree();
-                      },
-                    ));
+                    _moreTreesPage(Treetype.recorepos, context);
                   },
                 ),
                 WXArticalSection(
                   wxArticalModel,
                   moreOnTap: () {
-                    print("wx artical more");
+                    _moreTreesPage(Treetype.wxarticles, context);
                   },
                 ),
               ],
@@ -113,6 +109,15 @@ class _HomePageState extends State<HomePage>
               child: Icon(Icons.keyboard_arrow_up),
             ),
     );
+  }
+
+  //更多
+  _moreTreesPage(Treetype type, BuildContext ctx) {
+    Navigator.of(ctx).push(MaterialPageRoute(
+      builder: (context) {
+        return ReposTree(type);
+      },
+    ));
   }
 }
 
