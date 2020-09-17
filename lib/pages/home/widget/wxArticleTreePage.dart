@@ -43,6 +43,12 @@ class _WXArticleTreePageState extends State<WXArticleTreePage>
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     print("build");
     super.build(context);
@@ -98,7 +104,9 @@ class _WXArticleTreePageState extends State<WXArticleTreePage>
       model.datas.map((e) {
         _list.add(e);
       }).toList();
-      setState(() {});
+      if (mounted) {
+        setState(() {});
+      }
     });
   }
 

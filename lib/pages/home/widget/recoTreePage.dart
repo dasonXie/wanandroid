@@ -39,6 +39,12 @@ class _RecoTreePageState extends State<RecoTreePage>
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
+  }
+
+  @override
   bool get wantKeepAlive => true;
   @override
   Widget build(BuildContext context) {
@@ -95,7 +101,9 @@ class _RecoTreePageState extends State<RecoTreePage>
       model.datas.map((e) {
         _list.add(e);
       }).toList();
-      setState(() {});
+      if (mounted) {
+        setState(() {});
+      }
     });
   }
 
