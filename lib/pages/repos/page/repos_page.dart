@@ -72,8 +72,8 @@ class _ReposPageState extends State<ReposPage>
     //   print("num:$i" + projectList[i].title);
     // }
 
-    // if (mounted) {
-    setState(() {});
-    // }
+    if (mounted) {
+      setState(() {});
+    }
   }
 }
