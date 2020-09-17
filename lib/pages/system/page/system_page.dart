@@ -65,6 +65,9 @@ class _SystemPageState extends State<SystemPage>
         BaseRespList<SystemModel>(res, (res) => SystemModel.fromJson(res));
 
     //触发build
-    setState(() {});
+
+    if (mounted) {
+      setState(() {});
+    }
   }
 }
