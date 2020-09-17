@@ -31,7 +31,7 @@ class InputTextField extends StatelessWidget {
     return Row(
       children: [
         Container(
-          padding: EdgeInsets.all(20),
+          padding: EdgeInsets.fromLTRB(20, 10, 20, 20),
           child: Icon(
             icon,
             color: color,

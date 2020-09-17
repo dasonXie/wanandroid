@@ -38,6 +38,7 @@ class _ReposPageState extends State<ReposPage>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return EasyRefresh(
         firstRefresh: true,
         header: MaterialHeader(),
@@ -71,6 +72,8 @@ class _ReposPageState extends State<ReposPage>
     //   print("num:$i" + projectList[i].title);
     // }
 
+    // if (mounted) {
     setState(() {});
+    // }
   }
 }
