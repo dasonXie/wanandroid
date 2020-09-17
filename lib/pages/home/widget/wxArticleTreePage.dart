@@ -15,6 +15,8 @@ class WXArticleTreePage extends StatefulWidget {
 
 class _WXArticleTreePageState extends State<WXArticleTreePage>
     with AutomaticKeepAliveClientMixin {
+  ScrollController _scrollController;
+  bool _showTopBtn = false;
   List<RecoReposCellModel> _list = [];
   int _currentPage;
 
@@ -24,6 +26,18 @@ class _WXArticleTreePageState extends State<WXArticleTreePage>
   @override
   void initState() {
     super.initState();
+    _scrollController = ScrollController();
+    _scrollController.addListener(() {
+      if (_scrollController.offset >= 400 && _showTopBtn == false) {
+        setState(() {
+          _showTopBtn = true;
+        });
+      } else if (_scrollController.offset < 400 && _showTopBtn == true) {
+        setState(() {
+          _showTopBtn = false;
+        });
+      }
+    });
     _currentPage = 1;
     loadPageData();
   }
@@ -32,13 +46,27 @@ class _WXArticleTreePageState extends State<WXArticleTreePage>
   Widget build(BuildContext context) {
     print("build");
     super.build(context);
-    return _list.length == 0
-        ? Center(
-            child: CircularProgressIndicator(
-              strokeWidth: 2,
-            ),
-          )
-        : refreshWidget();
+    return Scaffold(
+      body: _list.length == 0
+          ? Center(
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+              ),
+            )
+          : refreshWidget(),
+      floatingActionButton: _showTopBtn
+          ? FloatingActionButton(
+              onPressed: () {
+                _scrollController.animateTo(.0,
+                    duration: Duration(milliseconds: 200), curve: Curves.ease);
+              },
+              child: Icon(
+                Icons.arrow_upward,
+              ),
+              backgroundColor: Colors.purple,
+            )
+          : null,
+    );
   }
 
   Widget refreshWidget() {
@@ -54,6 +82,7 @@ class _WXArticleTreePageState extends State<WXArticleTreePage>
         loadPageData();
       },
       child: ListView(
+        controller: _scrollController,
         children: columnChild(),
       ),
     );
