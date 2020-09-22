@@ -42,9 +42,10 @@ class _ReposPageState extends State<ReposPage>
     return EasyRefresh(
         firstRefresh: true,
         header: MaterialHeader(),
-        footer: MaterialFooter(),
+        // footer: MaterialFooter(),
         onRefresh: () => getProjectList(true),
         onLoad: () => getProjectList(false),
+        enableControlFinishLoad: true,
         controller: _controller,
         child: ListView.builder(
             itemCount: (projectList == null) ? 0 : projectList.length,
@@ -55,6 +56,7 @@ class _ReposPageState extends State<ReposPage>
     if (isRefresh) {
       this.pageNum = 0;
       projectList.clear();
+      // _controller.resetLoadState();
     } else {
       this.pageNum++;
     }
@@ -67,6 +69,12 @@ class _ReposPageState extends State<ReposPage>
         BaseResp<ProjectModel>(res, (res) => ProjectModel.fromJson(res));
 
     projectList.addAll(projectModel.data.list);
+
+    if (projectModel.data.list.length > 0) {
+      _controller.finishLoad(success: true, noMore: false);
+    } else {
+      _controller.finishLoad(success: true, noMore: true);
+    }
 
     // for (var i = 0; i < projectList.length; i++) {
     //   print("num:$i" + projectList[i].title);

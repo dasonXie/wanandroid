@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:wanandroid/pages/repos/model/projectListModel.dart';
+import 'package:wanandroid/pages/repos/page/web_page.dart';
 import 'package:wanandroid/pages/time_utils.dart';
+
+import 'like_btn.dart';
 
 class ReposList extends StatelessWidget {
   final ProjectListModel listModel;
@@ -8,7 +11,17 @@ class ReposList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Center(
+    return new InkWell(
+        onTap: () {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) {
+              return WebPage(
+                listModel.link,
+                title: listModel.title,
+              );
+            },
+          ));
+        },
         child: Container(
             height: 140.0,
             padding: EdgeInsets.only(left: 16, top: 16, right: 16, bottom: 10),
@@ -68,21 +81,5 @@ class ReposList extends StatelessWidget {
                 color: Colors.white,
                 border: new Border(
                     bottom: new BorderSide(width: 0.33, color: Colors.blue)))));
-  }
-}
-
-class LikeBtn extends StatelessWidget {
-  const LikeBtn({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return new InkWell(
-      child: new Icon(
-        Icons.favorite,
-        color: (true) ? Colors.redAccent : Colors.grey,
-      ),
-    );
   }
 }
