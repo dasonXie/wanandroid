@@ -51,7 +51,7 @@ class _RegisterPageState extends State<RegisterPage> {
           "Register",
           style: TextStyle(fontSize: 16, color: Colors.white),
         ),
-        onPressedFunc: () {
+        onPressedFunc: (context) {
           print("注册");
         },
         decoration: BoxDecoration(

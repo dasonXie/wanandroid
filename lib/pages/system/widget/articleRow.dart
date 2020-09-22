@@ -1,9 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:wanandroid/network/networkManager.dart';
 import 'package:wanandroid/pages/system/model/systemArticleModel.dart';
 import 'package:wanandroid/network/api.dart';
 import 'package:wanandroid/model/baseModel.dart';
-import 'package:wanandroid/pages/system/page/system_tab_page.dart';
 
 class ArticleRow extends StatefulWidget {
   final ArticleModel model;
@@ -130,5 +131,21 @@ class _ArticleRowState extends State<ArticleRow> {
   void dispose() {
     bloc.dispose();
     super.dispose();
+  }
+}
+
+//BLoC通道流
+//BLoC的时候还是要用在StatefulWidget，并且手动的调用一下dispose，否则可能会有不可预测的bug
+class RefreshBLoC {
+  var _controllerStream = StreamController<int>();
+
+  Stream<int> get steream => _controllerStream.stream;
+
+  refresh() {
+    _controllerStream.sink.add(1);
+  }
+
+  dispose() {
+    _controllerStream.close();
   }
 }
