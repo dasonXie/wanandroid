@@ -10,4 +10,9 @@ class ReposTreeProvider extends ChangeNotifier {
   int get titlesNum => this.titles.length;
   //默认分类
   ReposTreeCellModel currentTreeModel;
+  String title = "你好";
+  changeTitle() {
+    title = "世界";
+    notifyListeners();
+  }
 }
