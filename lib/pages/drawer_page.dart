@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wanandroid/pages/login/model/userModel.dart';
 import 'package:wanandroid/user/userManager.dart';
 
 import 'login/page/login.dart';
@@ -11,10 +12,40 @@ class DrawerPage extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          child: Padding(
-              padding: EdgeInsets.only(top: 60), child: loginOrlogout(context)),
-        )
+        Row(
+          children: [
+            Expanded(
+              child: DrawerHeader(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: ClipOval(
+                        child: Image.asset("assets/images/touxiang.jpg"),
+                      ),
+                    ),
+                    Text(
+                      UserManager.instance.model.username.isEmpty
+                          ? "userName"
+                          : UserManager.instance.model.username,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 17),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      "个人简介",
+                      style: TextStyle(color: Colors.white, fontSize: 12),
+                    ),
+                  ],
+                ),
+                decoration: BoxDecoration(color: Colors.purple),
+              ),
+            ),
+          ],
+        ),
+        loginOrlogout(context)
       ],
     );
   }
