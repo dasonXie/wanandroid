@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:wanandroid/model/baseModel.dart';
 import 'package:wanandroid/network/api.dart';
 import 'package:wanandroid/network/networkManager.dart';
+import 'package:wanandroid/pages/repos/page/web_page.dart';
 import 'package:wanandroid/pages/system/model/systemArticleModel.dart';
 import 'package:wanandroid/pages/system/viewModel/system_tab_viewModel.dart';
 import 'package:wanandroid/pages/system/widget/articleRow.dart';
@@ -95,7 +96,19 @@ class _SystemTabPageState extends State<SystemTabPage>
           return Divider();
         },
         itemBuilder: (BuildContext context, int index) {
-          return ArticleRow(notifi.modelList.list[index]);
+          return InkWell(
+            child: ArticleRow(notifi.modelList.list[index]),
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) {
+                  return WebPage(
+                    notifi.modelList.list[index].link,
+                    title: notifi.modelList.list[index].title,
+                  );
+                },
+              ));
+            },
+          );
         },
       ),
     );
