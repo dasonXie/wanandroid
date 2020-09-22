@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class WholeButton extends StatelessWidget {
-  Widget text;
-  int flex;
-  Decoration decoration;
-  VoidCallback onPressedFunc;
+  final Widget text;
+  final int flex;
+  final Decoration decoration;
+  final Function(BuildContext context) onPressedFunc;
 
   WholeButton(this.text,
       {Key key, this.flex = 18, @required this.onPressedFunc, this.decoration})
@@ -26,7 +26,7 @@ class WholeButton extends StatelessWidget {
                   splashColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   onPressed: () =>
-                      onPressedFunc == null ? null : onPressedFunc()),
+                      onPressedFunc == null ? null : onPressedFunc(context)),
               decoration: decoration,
             ),
           ),

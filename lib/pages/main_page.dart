@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wanandroid/config/netWorkConfig.dart';
 import 'package:wanandroid/pages/repos/page/repos_page.dart';
+import 'package:wanandroid/user/userManager.dart';
 import 'home/page/home_page.dart';
 import 'events_page.dart';
 import 'system/page/system_page.dart';
@@ -27,7 +30,10 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    createNetWorkConfig();
+    createUserInfo();
     ScreenUtil.init(context, width: 750, height: 1334, allowFontScaling: false);
+
     return DefaultTabController(
       length: 4,
       child: Scaffold(
@@ -47,6 +53,26 @@ class MainPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+//初始化网络配置
+  createNetWorkConfig() async {
+    NetworkConfig.instance.errorCallBack =
+        (code, msg) => errorCallBack(code, msg);
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String cookie = prefs.getString("Cookie");
+
+    NetworkConfig.instance..headers["Cookie"] = cookie;
+  }
+
+  errorCallBack(int code, String msg) {
+    print("code:" + code.toString() + "   msg" + msg);
+  }
+
+  //初始化用户信息
+  createUserInfo() {
+    UserManager.instance;
   }
 }
 

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import './provider/reposTreeProvider.dart';
 
 void main() {
+  Provider.debugCheckInvalidValueType = null;
   runApp(MyApp());
 }
 
@@ -16,6 +17,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ReposTreeProvider()),
       ],
       child: MaterialApp(
+        routes: {
+          "route_main": (ctx) => MainPage(),
+        },
         title: "Flutter Demo",
         theme: ThemeData(
           primaryColor: Colors.purple,

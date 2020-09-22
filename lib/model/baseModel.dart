@@ -1,5 +1,7 @@
 import 'dart:convert' show json;
 
+import 'package:flutter/material.dart';
+
 class BaseResp<T> {
   int code;
   String msg;
@@ -18,7 +20,7 @@ class BaseResp<T> {
   }
 }
 
-class BaseRespList<T> {
+class BaseRespList<T> extends ChangeNotifier {
   int code;
   String msg;
   List<T> data;
@@ -32,5 +34,9 @@ class BaseRespList<T> {
     msg = jsonRes['errorMsg'];
 
     data = (jsonRes['data'] as List).map<T>((ele) => buildFun(ele)).toList();
+  }
+
+  dataChange() {
+    notifyListeners();
   }
 }

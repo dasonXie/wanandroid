@@ -1,12 +1,11 @@
-// http://www.wanandroid.com/article/list/0/json?cid=60
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:provider/provider.dart';
 import 'package:wanandroid/model/baseModel.dart';
 import 'package:wanandroid/network/api.dart';
 import 'package:wanandroid/network/networkManager.dart';
 import 'package:wanandroid/pages/system/model/systemArticleModel.dart';
+import 'package:wanandroid/pages/system/viewModel/system_tab_viewModel.dart';
 import 'package:wanandroid/pages/system/widget/articleRow.dart';
 
 class SystemTabPage extends StatefulWidget {
@@ -22,122 +21,83 @@ class _SystemTabPageState extends State<SystemTabPage>
   @override
   bool get wantKeepAlive => true;
 
-  ArticleListModel _modelList;
-  int currentPage = 0;
-  RefreshBLoC bloc = RefreshBLoC();
   EasyRefreshController refreshController = EasyRefreshController();
+  // SystemTabViewModel viewModel = SystemTabViewModel();
 
   @override
   void initState() {
     super.initState();
-    refreshData();
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
-
-    return streamWidget();
+    // var prov = Provider.of<SystemTabViewModel>(context);
+    // var notifi = Provider.of<SystemTabViewModel>(context);
+    // notifi.refreshData(widget.cid, refreshController);
+    return providerWidget(context);
   }
 
-  streamWidget() {
-    return StreamBuilder(
-      stream: bloc.steream,
-      initialData: 0,
-      builder: (context, snapshot) {
-        return refreshWidget();
+  providerWidget(BuildContext context) {
+    // // 原有对象可以监听
+    // return ChangeNotifierProvider<SystemTabViewModel>.value(
+    //   value: viewModel,
+    //   // builder: (context, child) => refreshWidget(context),
+    //   child: Builder(
+    //     builder: (context) => refreshWidget(context),
+    //   ),
+    // );
+
+//没有对象可以监听
+    return ChangeNotifierProvider<SystemTabViewModel>(
+      create: (_) {
+        var viewmodel = SystemTabViewModel();
+        viewmodel.refreshData(widget.cid, refreshController);
+        return viewmodel;
       },
+      builder: (context, child) => refreshWidget2(context),
     );
   }
 
-  refreshWidget() {
+  // refreshWidget(BuildContext context) {
+  //   return EasyRefresh(
+  //     firstRefresh: false,
+  //     onRefresh: () => viewModel.refreshData(widget.cid, refreshController),
+  //     onLoad: () => viewModel.loadData(widget.cid, refreshController),
+  //     enableControlFinishLoad: true,
+  //     controller: refreshController,
+  //     child: ListView.separated(
+  //       itemCount: context.watch<SystemTabViewModel>().itemCount(),
+  //       //添加分割线
+  //       separatorBuilder: (BuildContext context, int index) {
+  //         return Divider();
+  //       },
+  //       itemBuilder: (BuildContext context, int index) {
+  //         return ArticleRow(
+  //             context.watch<SystemTabViewModel>().modelList.list[index]);
+  //       },
+  //     ),
+  //   );
+  // }
+
+  refreshWidget2(BuildContext context) {
+    var notifi = Provider.of<SystemTabViewModel>(context);
     return EasyRefresh(
       firstRefresh: false,
-      onRefresh: () => refreshData(),
-      onLoad: () => loadData(),
+      onRefresh: () => notifi.refreshData(widget.cid, refreshController),
+      onLoad: () => notifi.loadData(widget.cid, refreshController),
       enableControlFinishLoad: true,
       controller: refreshController,
       child: ListView.separated(
-        itemCount: itemCount(),
+        itemCount: notifi.itemCount(),
         //添加分割线
         separatorBuilder: (BuildContext context, int index) {
           return Divider();
         },
         itemBuilder: (BuildContext context, int index) {
-          print(_modelList.list[index].title);
-          return ArticleRow(_modelList.list[index]);
+          return ArticleRow(notifi.modelList.list[index]);
         },
       ),
     );
-  }
-
-  itemCount() {
-    if (this._modelList == null || this._modelList.list == null) {
-      return 0;
-    } else {
-      return this._modelList.list.length;
-    }
-  }
-
-  //加载网络数据
-  refreshData() async {
-    final res = await NetworkManager.getInstance().request(
-      WanAndroidApi.ARTICLE_LIST + "/0/json?cid=" + widget.cid,
-      method: "get",
-    );
-
-    _modelList =
-        BaseResp<ArticleListModel>(res, (res) => ArticleListModel.fromJson(res))
-            .data;
-
-    currentPage = 0;
-    refreshController.resetLoadState();
-    //bloc状态管理
-    bloc.refresh();
-  }
-
-  //加载网络数据
-  loadData() async {
-    currentPage += 1;
-    final res = await NetworkManager.getInstance().request(
-      WanAndroidApi.ARTICLE_LIST + "/$currentPage/json?cid=" + widget.cid,
-      method: "get",
-    );
-
-    var resultModel = BaseResp<ArticleListModel>(
-        res, (res) => ArticleListModel.fromJson(res));
-
-    _modelList.list += resultModel.data.list;
-
-    if (_modelList.list.length >= resultModel.data.total) {
-      refreshController.finishLoad(success: true, noMore: true);
-    } else {
-      refreshController.finishLoad(success: true, noMore: false);
-    }
-
-    //bloc状态管理
-    bloc.refresh();
-  }
-
-  @override
-  void dispose() {
-    bloc.dispose();
-    super.dispose();
-  }
-}
-
-//BLoC通道流
-//BLoC的时候还是要用在StatefulWidget，并且手动的调用一下dispose，否则可能会有不可预测的bug
-class RefreshBLoC {
-  var _controllerStream = StreamController<int>();
-
-  Stream<int> get steream => _controllerStream.stream;
-
-  refresh() {
-    _controllerStream.sink.add(1);
-  }
-
-  dispose() {
-    _controllerStream.close();
   }
 }

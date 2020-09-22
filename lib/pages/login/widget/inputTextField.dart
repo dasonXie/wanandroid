@@ -6,12 +6,14 @@ class InputTextField extends StatelessWidget {
   final String hintText;
   final bool obscureText;
   final TextInputType keyboardType;
+  final TextEditingController controller;
 
   InputTextField(this.icon, this.color,
       {Key key,
       this.hintText,
       this.obscureText = false,
-      this.keyboardType = TextInputType.text})
+      this.keyboardType = TextInputType.text,
+      this.controller})
       : super(key: key);
 
   @override
@@ -45,6 +47,7 @@ class InputTextField extends StatelessWidget {
                 decoration: InputDecoration(
                     border: InputBorder.none, hintText: hintText),
                 keyboardType: keyboardType,
+                controller: controller,
               ),
               Divider(),
             ],
