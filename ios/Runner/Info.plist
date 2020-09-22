@@ -42,8 +42,16 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 
+	<!--网络权限  -->
 	<key>io.flutter.embedded_views_preview</key>
 	<string>YES</string>
 	
+	<!-- 添加对HTTP的信任 -->
+	<key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
+    </dict>
+
 </dict>
 </plist>
