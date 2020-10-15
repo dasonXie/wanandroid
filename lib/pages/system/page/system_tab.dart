@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:wanandroid/pages/system/model/systemModel.dart';
 import 'package:wanandroid/pages/system/page/system_tab_page.dart';
-import 'package:wanandroid/pages/system/viewModel/system_tab_viewModel.dart';
+// import 'package:provider/provider.dart';
+// import 'package:wanandroid/pages/system/viewModel/system_tab_viewModel.dart';
 
 class SystemTab extends StatelessWidget {
   final SystemModel modelGroup;

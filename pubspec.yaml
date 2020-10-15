@@ -63,6 +63,8 @@ dependencies:
   # https://github.com/flutter/plugins/tree/master/packages/url_launcher
   url_launcher: ^5.4.10
   
+  # 播放器
+  chewie: ^0.9.10
 
 dev_dependencies:
   flutter_test:
@@ -88,6 +90,8 @@ flutter:
   assets:
     - assets/images/ic_login_bg.png
     - assets/images/touxiang.jpg
+    - assets/images/pause.png
+    - assets/images/enlarge.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 
