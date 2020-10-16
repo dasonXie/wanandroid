@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
-import 'package:wanandroid/provider/reposTreeProvider.dart';
 import 'package:wanandroid/service_method/home/home_network.dart';
 import '../model/reposTreeModel.dart';
 import '../widget/recoTreePage.dart';
