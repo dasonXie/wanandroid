@@ -7,6 +7,7 @@ import 'package:chewie/src/chewie_progress_colors.dart';
 import 'package:chewie/src/utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:open_iconic_flutter/open_iconic_flutter.dart';
 import 'package:video_player/video_player.dart';
 import 'package:wanandroid/pages/video/widget/videoProgress.dart';
@@ -423,12 +424,29 @@ class _VideoControlsState extends State<VideoControls> {
       _hideStuff = true;
 
       chewieController.toggleFullScreen();
+      toggleFullScreen();
       _expandCollapseTimer = Timer(Duration(milliseconds: 300), () {
         setState(() {
           _cancelAndRestartTimer();
         });
       });
     });
+  }
+
+//独立添加的全屏方法,因为第三方的全屏功能中判断了只有Android的有横屏
+  void toggleFullScreen() {
+    final isAndroid = Theme.of(context).platform == TargetPlatform.android;
+    if (!isAndroid) {
+      if (chewieController.isFullScreen) {
+        SystemChrome.setPreferredOrientations([
+          DeviceOrientation.landscapeRight,
+        ]);
+      } else {
+        SystemChrome.setPreferredOrientations([
+          DeviceOrientation.portraitUp,
+        ]);
+      }
+    }
   }
 
   Widget _buildProgressBar() {

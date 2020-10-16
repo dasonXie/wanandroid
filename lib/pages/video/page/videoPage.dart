@@ -21,7 +21,6 @@ class _VideoPageState extends State<VideoPage> {
     super.initState();
     _videoPlayerController1 = VideoPlayerController.network(
         'http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4');
-
     _videoPlayerController2 = VideoPlayerController.network(
         'http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4');
     _chewieController = ChewieController(
@@ -84,7 +83,7 @@ class _VideoPageState extends State<VideoPage> {
                     setState(() {
                       _chewieController.dispose();
                       _videoPlayerController2.pause();
-                      _videoPlayerController2.seekTo(Duration(seconds: 0));
+                      _videoPlayerController2.seekTo(Duration(seconds: 20));
                       _chewieController = ChewieController(
                         videoPlayerController: _videoPlayerController1,
                         aspectRatio: 16 / 9,
@@ -105,7 +104,7 @@ class _VideoPageState extends State<VideoPage> {
                     setState(() {
                       _chewieController.dispose();
                       _videoPlayerController1.pause();
-                      _videoPlayerController1.seekTo(Duration(seconds: 0));
+                      _videoPlayerController1.seekTo(Duration(seconds: 30));
                       _chewieController = ChewieController(
                         videoPlayerController: _videoPlayerController2,
                         aspectRatio: 16 / 9,
