@@ -24,7 +24,10 @@ class _WebPageState extends State<WebPage> {
         title: Text(widget.title),
         centerTitle: true,
         actions: <Widget>[
-          LikeBtn(),
+          LikeBtn(
+            width: 56.0,
+            duration: Duration(milliseconds: 3000),
+          ),
           PopupMenuButton(
             padding: EdgeInsets.all(10),
             onSelected: (value) {
