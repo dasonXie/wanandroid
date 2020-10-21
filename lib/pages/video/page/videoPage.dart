@@ -28,6 +28,7 @@ class _VideoPageState extends State<VideoPage> {
       aspectRatio: 16 / 9,
       autoPlay: true,
       looping: true,
+      startAt: Duration(seconds: 10),
 
       // Try playing around with some of these other options:
 
@@ -35,6 +36,7 @@ class _VideoPageState extends State<VideoPage> {
       customControls: VideoControls(
         backgroundColor: Colors.transparent,
         iconColor: Color.fromARGB(255, 200, 200, 200),
+        cutTimeSeconds: 15,
       ),
 
 //
