@@ -28,16 +28,19 @@ class UserManager {
     //获取本地存储的header
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String header = prefs.getString(NETWORK_HEADER);
-    _instance._updateUserInfo(header);
+
+    String username = prefs.getString(USERNAME);
+    _instance._updateUserInfo(header, username: username);
   }
 
   ///更新用户数据
-  _updateUserInfo(String header) {
+  _updateUserInfo(String header, {String username}) {
     if (header == null) {
       model.header = "";
     } else {
       model.header = header;
     }
+    if (username != null) model.username = username;
   }
 
   ///用户是否登录
@@ -72,9 +75,11 @@ class UserManager {
           //本地保存header
           SharedPreferences prefs = await SharedPreferences.getInstance();
           await prefs.setString(NETWORK_HEADER, cookie);
+          await prefs.setString(USERNAME, username);
+
           //更新header
           NetworkConfig.instance.headers["Cookie"] = cookie;
-          UserManager.instance._updateUserInfo(cookie);
+          UserManager.instance._updateUserInfo(cookie, username: username);
         }
       });
 

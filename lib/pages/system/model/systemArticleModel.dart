@@ -29,9 +29,10 @@ class ArticleModel {
   String title;
   int id;
   double publishTime;
+  String link;
 
   ArticleModel(this.niceDate, this.collect, this.superChapterName,
-      this.shareUser, this.title, this.id);
+      this.shareUser, this.title, this.id, this.publishTime, this.link);
 
   factory ArticleModel.fromJson(Map<String, dynamic> json) =>
       _$ArticleModelFromJson(json);
