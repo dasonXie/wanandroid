@@ -5,6 +5,8 @@ import 'package:wanandroid/user/userManager.dart';
 
 import 'login/page/login.dart';
 
+import 'photos/photo_pick.dart';
+
 class DrawerPage extends StatelessWidget {
   const DrawerPage({Key key}) : super(key: key);
 
@@ -66,7 +68,17 @@ class DrawerPage extends StatelessWidget {
             //       builder: (BuildContext context) => VideoPage()));
             // },
           ),
-        )
+        ),
+        RaisedButton(
+          onPressed: () {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) {
+                return PhotoPickerPage();
+              },
+            ));
+          },
+          child: Text("照片"),
+        ),
       ],
     );
   }

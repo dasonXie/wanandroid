@@ -66,6 +66,11 @@ dependencies:
   # 播放器
   chewie: ^0.9.10
 
+  #图片选择器，最新版本4.2.2与chewie冲突，chewie依赖video_player版本较低
+  wechat_assets_picker: ^4.2.1
+  #最新版1.3.0与chewie冲突，chewie依赖video_player版本较低
+  wechat_camera_picker: ^1.2.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
