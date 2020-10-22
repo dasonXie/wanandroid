@@ -16,12 +16,12 @@ class _PhotoPickerPageState extends State<PhotoPickerPage> {
   List<AssetEntity> assets = <AssetEntity>[];
 
   //图片选择器
-  Future _imagePicker() async {
+  Future _imagePicker(RequestType pickType) async {
     await AssetPicker.pickAssets(
       context,
       maxAssets: 9, //最大张数
       selectedAssets: assets,
-      requestType: RequestType.common,
+      requestType: pickType,
       customItemPosition: CustomItemPosition.prepend,
       customItemBuilder: (context) {
         return GestureDetector(
@@ -101,12 +101,24 @@ class _PhotoPickerPageState extends State<PhotoPickerPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   RaisedButton(
-                    onPressed: _imagePicker,
+                    onPressed: () {
+                      _imagePicker(RequestType.image);
+                    },
                     child: Text("选择图片"),
                     color: Colors.blue,
                   ),
                   SizedBox(
-                    width: 50,
+                    width: 30,
+                  ),
+                  RaisedButton(
+                    onPressed: () {
+                      _imagePicker(RequestType.video);
+                    },
+                    child: Text("选择视频"),
+                    color: Colors.blue,
+                  ),
+                  SizedBox(
+                    width: 30,
                   ),
                   RaisedButton(
                     onPressed: assets.length == 0 ? null : _uploadImages,
