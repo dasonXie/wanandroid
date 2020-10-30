@@ -17,11 +17,13 @@ class VideoControls extends StatefulWidget {
     @required this.backgroundColor,
     @required this.iconColor,
     @required this.cutTimeSeconds,
+    @required this.onTimes,
   });
 
   final Color backgroundColor;
   final Color iconColor;
   final int cutTimeSeconds;//播放到第几秒开始回调,可以做一些暂停或者其他的处理
+  final bool Function(Duration) onTimes;
 
   @override
   State<StatefulWidget> createState() {
@@ -40,18 +42,19 @@ class _VideoControlsState extends State<VideoControls> {
 
   VideoPlayerController controller;
   ChewieController chewieController;
+  bool istime =true;
 
   @override
   Widget build(BuildContext context) {
     chewieController = ChewieController.of(context);
 
-    Future<Duration> future = controller.position;
-    future.then((value) {
-      if (value >= Duration(seconds: widget.cutTimeSeconds)) {
-        print("需要回调时间逻辑处理自己实现:" + value.toString());
-        //controller.pause();比如暂停或者其他实现
-      }
-    });
+
+    if (istime) {
+      Future<Duration> future = controller.position;
+      future.then((value) {
+        istime = widget.onTimes(value);
+      });
+    }
 
     if (_latestValue.hasError) {
       return chewieController.errorBuilder != null

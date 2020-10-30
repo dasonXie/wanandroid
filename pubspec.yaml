@@ -57,7 +57,7 @@ dependencies:
   #本地存储
   shared_preferences: ^0.5.10
   #WebView
-  webview_flutter: ^0.3.22+1
+  webview_flutter: ^1.0.5
   # 分享
   share: ^0.6.5
   # https://github.com/flutter/plugins/tree/master/packages/url_launcher
@@ -70,6 +70,10 @@ dependencies:
   wechat_assets_picker: ^4.2.1
   #最新版1.3.0与chewie冲突，chewie依赖video_player版本较低
   wechat_camera_picker: ^1.2.1
+
+  flutter_getuuid: ^0.0.1
+
+  fijkplayer: ^0.8.7
 
 dev_dependencies:
   flutter_test:

@@ -1,6 +1,8 @@
+import 'package:fijkplayer/fijkplayer.dart';
 import 'package:flutter/material.dart';
 // import 'package:wanandroid/pages/login/model/userModel.dart';
 import 'package:wanandroid/pages/video/page/videoPage.dart';
+import 'package:wanandroid/pages/video/page/fijk_page.dart';
 import 'package:wanandroid/user/userManager.dart';
 
 import 'login/page/login.dart';
@@ -25,6 +27,7 @@ class DrawerPage extends StatelessWidget {
                     Expanded(
                       child: ClipOval(
                         child: Image.asset("assets/images/touxiang.jpg"),
+
                       ),
                     ),
                     Text(
@@ -59,6 +62,26 @@ class DrawerPage extends StatelessWidget {
               Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) {
                   return VideoPage();
+                },
+              ));
+            },
+            // onTap: () {
+            //   //打开视频页面
+            //   Navigator.of(context).push(MaterialPageRoute(
+            //       builder: (BuildContext context) => VideoPage()));
+            // },
+          ),
+        ),
+        SizedBox(
+          height: 50,
+        ),
+        Center(
+          child: InkWell(
+            child: Text("ijk视频"),
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) {
+                  return FijkPage();
                 },
               ));
             },
